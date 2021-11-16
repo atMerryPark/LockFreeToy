@@ -1,6 +1,7 @@
 #pragma once
 #include "CommonUtil.h"
 #include <mutex>
+#include <stack>
 
 
 template<typename T>

@@ -11,6 +11,8 @@ add_executable(UnitTest ${HEADER} ${SOURCE})
 target_include_directories(UnitTest
 PRIVATE
 		../ThirdParty/benchmark/include/benchmark
+		../LockFreeDataStructure/Source/Lock/Public
+		../LockFreeDataStructure/Source/LockFree/Public
 )
 
 target_link_libraries(UnitTest benchmark_main LockFreeDataStructure)
