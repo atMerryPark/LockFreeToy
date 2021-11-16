@@ -1,6 +1,6 @@
 set (Header
 	./Source/Lock/Public/LockStack.h
-	./Source/LockFree/Public/LockFreeStat.h
+	./Source/LockFree/Public/LockFreeStack.h
 	./Source/LockFree/Public/TypeDefines.h
 	./Source/LockFree/Public/CommonUtil.h
 
@@ -10,7 +10,6 @@ set (Header
 )
  
 set (SOURCE
-LockFreeCommon.cpp
 	./Source/LockFree/Private/LockFreeCommon.cpp
 	./Source/Lock/Private/LockStack.cpp
 )

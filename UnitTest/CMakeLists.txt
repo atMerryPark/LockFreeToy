@@ -5,9 +5,9 @@ set(SOURCE
 )
 
 
-enable_testing()
+#enable_testing()
 
-add_executable(unit_test ${HEADER} ${SOURCE})
+add_executable(UnitTest ${HEADER} ${SOURCE})
 target_include_directories(UnitTest
 PRIVATE
 		../ThirdParty/benchmark/include/benchmark
@@ -16,4 +16,4 @@ PRIVATE
 target_link_libraries(UnitTest benchmark_main LockFreeDataStructure)
 
  
-add_test(NAME UnitTest COMMAND UnitTest)
+#add_test(NAME UnitTest COMMAND UnitTest)
