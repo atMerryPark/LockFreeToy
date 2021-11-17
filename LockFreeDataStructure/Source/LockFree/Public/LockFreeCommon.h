@@ -151,7 +151,7 @@ public:
 		{
 			StampedIndex curHead = m_head;
 			index = curHead.GetIndex();
-			if ( index = 0 )
+			if ( index == 0 )
 			{
 				break;
 			}

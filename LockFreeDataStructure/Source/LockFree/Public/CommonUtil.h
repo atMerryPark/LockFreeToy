@@ -1,6 +1,6 @@
 #pragma once
 #include "TypeDefines.h"
-
+#include <type_traits>
 
 #define check(expr) do \
 		{ \
