@@ -32,6 +32,10 @@ BENCHMARK(BM_##func)							\
 			state.SkipWithError("Sync Error");	\
 			return;		\
 		}	\
+		else\
+		{	\
+			break;	\
+		}	\
 	} while ( true );	\
 	
 
@@ -109,7 +113,6 @@ void LockStackPop(int threadNum, benchmark::State& state)
 		ls.Push(i);
 	}
 	state.ResumeTiming();
-
 
 	
 
