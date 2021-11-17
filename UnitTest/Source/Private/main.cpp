@@ -94,9 +94,8 @@ void LockStackPush(int threadNum, benchmark::State& state)
 		}
 	}
 	state.ResumeTiming();
-
 	
-	EXIT_ERROR(false)
+	
 	EXIT_ERROR(count == 0);
 }
 
