@@ -41,9 +41,7 @@ class LockFreeLinkAllocator_TLSCache
 
 public:
 	LockFreeLinkAllocator_TLSCache()
-	{
-		// http://egloos.zum.com/sweeper/v/1985738
-		// TODO: 왜 MainThread 에서만 할 수 있게 했을까?
+	{	
 		// check(IsInGameThread());
 
 		TlsSlot = ::TlsAlloc();
@@ -192,5 +190,3 @@ void FLockFreeLinkPolicy::FreeLockFreeLink(uint32 Item)
 {
 	GLockFreeLinkAllocator.Push(Item);	// 할당했던 메모리블럭을 재사용하기 위해서, Free List 에 반환.
 }
-
-// https://github.com/xtozero/LockFreeDataStructure/blob/master/LockFreeDataStructure/Source/Public/LockFreeFixedMemoryPool.hpp

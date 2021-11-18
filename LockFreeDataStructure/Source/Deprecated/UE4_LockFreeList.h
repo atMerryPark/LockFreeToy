@@ -241,8 +241,7 @@ private:
 		}
 		return (void*)(Pages[BlockIndex] + SubIndex);
 	}
-
-	// Cache Miss 방어
+	
 	uint8 PadToAvoidContention0[PLATFORM_CACHE_LINE_SIZE];
 	ThreadSafeCounter NextIndex;
 	uint8 PadToAvoidContention1[PLATFORM_CACHE_LINE_SIZE];
@@ -256,11 +255,11 @@ struct FIndexedLockFreeLink
 {
 	FIndexedPointer DoubleNext;		// 다음 노드 Index
 	void* Payload;					// 노드에 담을 데이터
-	uint32 SingleNext;				// TODO: ?
+	uint32 SingleNext;				
 };
 
 // there is a version of this code that uses 128 bit atomics to avoid the indirection, that is why we have this policy class at all.
-// Indirection( 간접참조 ) ? 를 피하기 위해서 128비트 Atomic 을 연산을 쓴다. 이 정책 클래스가 있는 이유.
+// Indirection 를 피하기 위해서 128비트 Atomic 을 연산을 쓴다. 이 정책 클래스가 있는 이유.
 struct FLockFreeLinkPolicy
 {
 	enum
@@ -270,13 +269,7 @@ struct FLockFreeLinkPolicy
 	typedef FIndexedPointer TDoublePtr;
 	typedef FIndexedLockFreeLink TLink;
 	typedef uint32 TLinkPtr;
-	typedef TLockFreeAllocOnceIndexedAllocator<FIndexedLockFreeLink, MAX_LOCK_FREE_LINKS, 16384> TAllocator;
-
-
-	// TODO: 여기서 링크와, 인덱스, Ptr 의 의미가?
-	//		여기선 Index 와 Ptr 의 의미는 같아보인다. 둘다 Link 를 반환한다. 함수명만 단어에 맞게 맞춤.
-	//		다른 곳에선 달라질 수 있음을 대비하는건가 ?
-	//		Allocator 타입이 TLockFreeAllocOnceIndexedAllocator 여서 그런건가?
+	typedef TLockFreeAllocOnceIndexedAllocator<FIndexedLockFreeLink, MAX_LOCK_FREE_LINKS, 16384> TAllocator;	
 
 	// 링크 참조
 	static FORCEINLINE FIndexedLockFreeLink* DerefLink(uint32 Ptr)
@@ -455,38 +448,3 @@ struct FLockFreeLinkPolicy
 //	TDoublePtr Head;
 //	FPaddingForCacheContention<TPaddingForCacheContention> PadToAvoidContention2;
 //};
-
-
-
-
-// TODO: 캐시라인 문제 공부
-// TODO: 메모리 ordering 공부
-
-
-// reference
-// Interlocked API
-//		유저모드에서 동작 되기 때문에 매우 빠르게 동작//		
-//		https://jungwoong.tistory.com/41
-
-// For effective multithread programming
-// https://bluekms21.gitbooks.io/femp/content/06_Non-BlockingAlgorithm.html
-
-// volatile 사용 이유
-// 1. 최적화를 하지 마라.
-// 2. caching 하지말고 메모리에 직접 operate 하라.
-// 이처럼 레지스터를 재사용하지 않고 반드시 메모리를 참조할 경우 가시성(visibility) 이 보장된다고 말한다. 멀티쓰레드 프로그램이라면 한 쓰레드가 메모리에 쓴 내용이 다른 쓰레드에 보인다는 것을 의미한다.
-// http://egloos.zum.com/sweeper/v/1781856
-// https://skyul.tistory.com/337
-
-// 메모리 가시성 이란?
-// 이처럼 레지스터를 재사용하지 않고 반드시 메모리를 참조할 경우 가시성(visibility) 이 보장된다고 말한다.멀티쓰레드 프로그램이라면 한 쓰레드가 메모리에 쓴 내용이 다른 쓰레드에 보인다는 것을 의미한다.
-
-
-// TLS
-// https://docs.microsoft.com/ko-kr/windows/win32/procthread/thread-local-storage
-// https://en.wikipedia.org/wiki/Thread-local_storage#C_and_C++
-
-// TLS 의 크기는 memory paging 기법으로 관리된다.
-
-// TDB << TIB << TLS 
-// Dll load 시에 TLS 가 어떻게 구성되는지가 머릿속에 잘 안그려진다.
